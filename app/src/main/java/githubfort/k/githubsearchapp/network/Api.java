@@ -1,5 +1,15 @@
 package githubfort.k.githubsearchapp.network;
 
-public class Api {
-    public static final String BASE_URL ="Initial";
+import githubfort.k.githubsearchapp.data.Repo;
+import io.reactivex.Flowable;
+import retrofit2.http.GET;
+import retrofit2.http.Url;
+
+public interface Api {
+     String BASE_URL ="https://api.github.com/search/";
+
+     @GET
+    Flowable<Repo>getRepo(@Url String url);
+
+
 }

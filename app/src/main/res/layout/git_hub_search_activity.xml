@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/searchEditText"
+        android:inputType="text"
+        android:layout_marginStart="@dimen/standard_mar"
+        android:layout_marginEnd="@dimen/standard_mar"
+        android:layout_marginBottom="@dimen/standard_mar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/buttonSearch"
+        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:textColor="#FFFFFF"
+        android:hint="@string/type_repo_name_here"
+        android:textColorHint="#FFFFFF"
+        android:background="@drawable/edit__text_search_corners"
+        />
+
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_marginStart="@dimen/standard_mar"
+        android:layout_marginEnd="@dimen/standard_mar"
+        android:layout_marginTop="@dimen/standard_mar"
+        android:layout_marginBottom="@dimen/standard_mar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_search_text"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/search_button_corners"
+        app:layout_constraintStart_toEndOf="@id/searchEditText"
+        app:layout_constraintBottom_toBottomOf="@id/searchEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/searchEditText"
+        />
+
+
+
 
 </android.support.constraint.ConstraintLayout>
