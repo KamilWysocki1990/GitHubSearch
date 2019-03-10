@@ -31,5 +31,5 @@ ext {
     support = "27.1.1"
     dagger = "2.16"
     butterknife = "8.8.1"
-
+    glide = "4.9.0"
 }

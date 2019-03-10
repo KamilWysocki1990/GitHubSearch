@@ -1,6 +1,8 @@
-package githubfort.k.githubsearchapp.activitys.gitbubsearch;
+package githubfort.k.githubsearchapp.activitys.githubsearch;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -29,8 +32,12 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
 
     private List<Item> gitRepoList = new ArrayList<>();
 
+    public void clearRepoBeforeNextRequest(){
+        gitRepoList.clear();
+        notifyDataSetChanged();
+    }
 
-    public void updateBooks(List<Item>gitRepoFromNetwork){
+    public void updateRepoList(List<Item>gitRepoFromNetwork){
         gitRepoList.addAll(gitRepoFromNetwork);
         notifyDataSetChanged();
     }
@@ -43,20 +50,23 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
 
         return new ViewHolder(
                 LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_git_hub_search, parent, false);
+                        .inflate(R.layout.item_git_hub_search, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull GitHubSearchAdapter.ViewHolder holder, int position) {
-    holder.setup
+        holder.setup(gitRepoList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return gitRepoList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.item_Star)
+        ImageView imageStar;
 
         @BindView(R.id.item_avatar_image)
         ImageView avatarImage;
@@ -83,15 +93,36 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
                 setImageGlide(item);
             }
 
+            repoName.setText(item.getName());
+            language.setText(item.getLanguage());
+            numberOfStars.setText(String.valueOf(item.getStargazers()));
+
+
+            itemView.setOnClickListener(view ->{
+
+                Intent intentWebView = new Intent();
+                intentWebView.setAction(Intent.ACTION_VIEW);
+                intentWebView.setData(Uri.parse(item.getLinkToRepository()));
+                    if(intentWebView.resolveActivity(itemView.getContext().getPackageManager())!=null){
+                        itemView.getContext().startActivity(intentWebView);
+                    } else {
+                        Toast.makeText(itemView.getContext(),"Unfortunately, there is no application that can handle this operation",Toast.LENGTH_LONG).show();
+                    }
+
+            });
 
         }
 
+
+
         private void setImageGlide(Item item) {
+
             Glide.with(itemView.getContext())
                     .load(item.getOwner().getAvatarUrl())
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            setImageWithoutApiResponse();
                             Toast.makeText(itemView.getContext(), "failed", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                             return false;
@@ -105,10 +136,11 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
 
                     })
                     .into(avatarImage);
+
         }
 
         private void setImageWithoutApiResponse() {
-            avatarImage.setImageResource(R.drawable.);
+            avatarImage.setImageResource(R.mipmap.gh_logo);
         }
 
     }

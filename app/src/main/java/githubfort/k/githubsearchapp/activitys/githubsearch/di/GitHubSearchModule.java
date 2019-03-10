@@ -1,11 +1,11 @@
-package githubfort.k.githubsearchapp.activitys.gitbubsearch.di;
+package githubfort.k.githubsearchapp.activitys.githubsearch.di;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import githubfort.k.githubsearchapp.activitys.gitbubsearch.GitHubSearchContract;
-import githubfort.k.githubsearchapp.activitys.gitbubsearch.GitHubSearchPresenter;
+import githubfort.k.githubsearchapp.activitys.githubsearch.GitHubSearchContract;
+import githubfort.k.githubsearchapp.activitys.githubsearch.GitHubSearchPresenter;
 import githubfort.k.githubsearchapp.network.Api;
 
 @Module

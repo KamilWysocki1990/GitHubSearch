@@ -1,5 +1,6 @@
-package githubfort.k.githubsearchapp.activitys.gitbubsearch;
+package githubfort.k.githubsearchapp.activitys.githubsearch;
 
+import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
@@ -10,12 +11,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class GitHubSearchPresenter implements GitHubSearchContract.Presenter,LifecycleObserver {
+public class GitHubSearchPresenter implements GitHubSearchContract.Presenter, LifecycleObserver {
 
     private GitHubSearchContract.View viewGHS;
     private Api api;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private int numberOfItems;
+    private double numberOfItems;
 
     public GitHubSearchPresenter(GitHubSearchContract.View viewGHS, Api api) {
         this.viewGHS = viewGHS;
@@ -25,6 +26,10 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter,Lif
 
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    public void onStopToDo() {
+        compositeDisposable.clear();
+    }
 
     @Override
     public void searchForRepo(String textToSearch) {
@@ -39,16 +44,14 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter,Lif
     }
 
     private void getDataFromModel(String request) {
-         getResponse(request);
+        getResponse(request);
 
     }
 
     private void getPagedResponse(String request) {
-        int numberOfPage = numberOfItems / 50;
-        for (int i = 1; i < numberOfPage; i++) {
+        if (numberOfItems <= 200) {
 
-
-            String requestForPagedItems = "repositories?q=" + request + "&page=" + String.valueOf(i) + "&per_page=50";
+            String requestForPagedItems = "repositories?q=" + request + "&per_page=50";
             compositeDisposable.add(
                     api.getRepo(requestForPagedItems)
                             .subscribeOn(Schedulers.io())
@@ -59,14 +62,50 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter,Lif
                                     },
                                     Throwable::printStackTrace
                                     , () -> {
-
                                     }
                             )
             );
 
 
+        } else {
+
+            double numberOfPageRound = setNumberForPageIteration();
+            for (int i = 1; i <= numberOfPageRound; i++) {
+
+
+                String howManyItemsPerResponse = "100";
+
+                String requestForPagedItems = "repositories?q=" + request + "&page=" + String.valueOf(i) + "&per_page=" + howManyItemsPerResponse;
+                compositeDisposable.add(
+                        api.getRepo(requestForPagedItems)
+                                .subscribeOn(Schedulers.computation())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                        repoData -> {
+                                            viewGHS.addPagedItemToList(repoData.getItems());
+                                        },
+                                        Throwable::printStackTrace
+                                        , () -> {
+                                        }
+                                )
+                );
+
+
+
+
+            }
         }
     }
+
+    private double setNumberForPageIteration() {
+        double numberOfPage = (numberOfItems/ 100);
+        double numberOfPageRound = Math.round(numberOfItems / 100);
+        if(numberOfPage>numberOfPageRound){
+            numberOfPageRound=numberOfPageRound+1;
+        }
+        return numberOfPageRound;
+    }
+
 
     private void getResponse(String request) {
 
@@ -78,10 +117,9 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter,Lif
                         .subscribe(
                                 repoData -> {
                                     numberOfItems = repoData.getTotalCount();
-                                    //   viewGHS.displayTextConfirmData(repoData.getItems().get(0).getName());
                                 }, Throwable::printStackTrace
                                 , () -> {
-                                   getPagedResponse(request);
+                                    getPagedResponse(request);
                                 }
                         )
         );

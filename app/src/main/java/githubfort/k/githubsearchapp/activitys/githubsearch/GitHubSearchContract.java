@@ -1,6 +1,4 @@
-package githubfort.k.githubsearchapp.activitys.gitbubsearch;
-
-import android.text.Editable;
+package githubfort.k.githubsearchapp.activitys.githubsearch;
 
 import java.util.List;
 

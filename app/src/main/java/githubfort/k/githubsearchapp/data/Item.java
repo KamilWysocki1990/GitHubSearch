@@ -17,6 +17,37 @@ public class Item {
     @Expose
     private Owner owner;
 
+    @SerializedName("stargazers_count")
+    @Expose
+    private Integer stargazers;
+
+    @SerializedName("language")
+    @Expose
+    private String language;
+
+    @SerializedName("html_url")
+    @Expose
+    private String linkToRepository;
+
+
+
+    public Integer getStargazers() {
+        return stargazers;
+    }
+
+    public void setStargazers(Integer stargazers) {
+        this.stargazers = stargazers;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+
 
     public Integer getId() {
         return id;
@@ -41,4 +72,13 @@ public class Item {
     public void setOwner(Owner owner) {
         this.owner = owner;
     }
+
+    public String getLinkToRepository() {
+        return linkToRepository;
+    }
+
+    public void setLinkToRepository(String linkToRepository) {
+        this.linkToRepository = linkToRepository;
+    }
+
 }

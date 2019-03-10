@@ -2,8 +2,8 @@ package githubfort.k.githubsearchapp.di;
 
 import dagger.Component;
 import githubfort.k.githubsearchapp.ApplicationScope;
-import githubfort.k.githubsearchapp.activitys.gitbubsearch.di.GitHubSearchComponent;
-import githubfort.k.githubsearchapp.activitys.gitbubsearch.di.GitHubSearchModule;
+import githubfort.k.githubsearchapp.activitys.githubsearch.di.GitHubSearchComponent;
+import githubfort.k.githubsearchapp.activitys.githubsearch.di.GitHubSearchModule;
 
 @ApplicationScope
 @Component(modules = {AppModule.class, DataModule.class})

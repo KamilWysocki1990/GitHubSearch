@@ -2,4 +2,6 @@
     <string name="app_name">GitHubSearchApp</string>
     <string name="type_repo_name_here">Type repo name here</string>
     <string name="button_search_text">Search</string>
+    <string name="owneravatar">OwnerAvatar</string>
+    <string name="star">star</string>
 </resources>
