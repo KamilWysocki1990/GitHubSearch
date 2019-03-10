@@ -40,7 +40,20 @@
         app:layout_constraintTop_toTopOf="@id/searchEditText"
         />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/git_repo_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText"
+        android:layout_marginStart="@dimen/standard_mar"
+        android:layout_marginEnd="@dimen/standard_mar"
+        android:layout_marginTop="@dimen/standard_mar"
+        android:layout_marginBottom="@dimen/standard_mar"
 
+        />
 
 
 </android.support.constraint.ConstraintLayout>
