@@ -59,16 +59,19 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
 
     // Retrofit
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofit}"
 
     //RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation "com.github.bumptech.glide:glide:${rootProject.ext.glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${rootProject.ext.glide}"
+
+    //ShowCaseView
+    implementation 'com.github.deano2390:MaterialShowcaseView:1.2.0@aar'
+
 
 }
 

@@ -10,9 +10,13 @@ public interface GitHubSearchContract {
 
         void showTextAfterEditTextSearchIsEmpty();
 
-        void displayTextConfirmData(String name);
+        void displayHowManyItemsFromResponseTotal(String name);
 
         void addPagedItemToList(List<Item> items);
+
+        void showProgress();
+
+        void showError();
     }
 
     interface Presenter{
@@ -20,5 +24,5 @@ public interface GitHubSearchContract {
 
         void searchForRepo(String textToSearch);
     }
-
 }
+

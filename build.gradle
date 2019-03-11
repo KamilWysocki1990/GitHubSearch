@@ -19,6 +19,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
+
     }
 }
 
@@ -32,4 +34,5 @@ ext {
     dagger = "2.16"
     butterknife = "8.8.1"
     glide = "4.9.0"
+    retrofit = "2.4.0"
 }

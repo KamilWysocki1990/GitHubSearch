@@ -2,5 +2,7 @@
 <resources>
 
     <dimen name="standard_mar">15dp</dimen>
+    <dimen name="standard_mar_in_item">15dp</dimen>
+    <dimen name="half_standard_mar_in_item">8dp</dimen>
 
 </resources>

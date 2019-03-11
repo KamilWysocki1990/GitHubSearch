@@ -28,18 +28,34 @@ import butterknife.ButterKnife;
 import githubfort.k.githubsearchapp.R;
 import githubfort.k.githubsearchapp.data.Item;
 
+
 public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapter.ViewHolder> {
 
     private List<Item> gitRepoList = new ArrayList<>();
 
-    public void clearRepoBeforeNextRequest(){
+
+    public void clearRepoBeforeNextRequest() {
         gitRepoList.clear();
         notifyDataSetChanged();
     }
 
-    public void updateRepoList(List<Item>gitRepoFromNetwork){
+    public void updateRepoList(List<Item> gitRepoFromNetwork) {
+
+        changeIfNeedDataAreAvailable(gitRepoFromNetwork);
         gitRepoList.addAll(gitRepoFromNetwork);
         notifyDataSetChanged();
+    }
+
+    private void changeIfNeedDataAreAvailable(List<Item> gitRepoFromNetwork) {
+        for (int i = 0; i < gitRepoFromNetwork.size(); i++) {
+            if (gitRepoFromNetwork.get(i).getLanguage() == null) {
+                gitRepoFromNetwork.get(i).setLanguage("Information not provided");
+            }
+            if (gitRepoFromNetwork.get(i).getName() == null) {
+                gitRepoFromNetwork.get(i).setName("Name not provided");
+            }
+
+        }
     }
 
 
@@ -86,6 +102,9 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
             ButterKnife.bind(this, itemView);
         }
 
+
+
+
         void setup(Item item) {
             if (item.getOwner().getAvatarUrl() == null) {
                 setImageWithoutApiResponse();
@@ -96,23 +115,19 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
             repoName.setText(item.getName());
             language.setText(item.getLanguage());
             numberOfStars.setText(String.valueOf(item.getStargazers()));
-
-
-            itemView.setOnClickListener(view ->{
-
+            itemView.setOnClickListener(view -> {
                 Intent intentWebView = new Intent();
                 intentWebView.setAction(Intent.ACTION_VIEW);
                 intentWebView.setData(Uri.parse(item.getLinkToRepository()));
-                    if(intentWebView.resolveActivity(itemView.getContext().getPackageManager())!=null){
-                        itemView.getContext().startActivity(intentWebView);
-                    } else {
-                        Toast.makeText(itemView.getContext(),"Unfortunately, there is no application that can handle this operation",Toast.LENGTH_LONG).show();
-                    }
+                if (intentWebView.resolveActivity(itemView.getContext().getPackageManager()) != null) {
+                    itemView.getContext().startActivity(intentWebView);
+                } else {
+                    Toast.makeText(itemView.getContext(), R.string.textForMissingWebServices, Toast.LENGTH_LONG).show();
+                }
 
             });
 
         }
-
 
 
         private void setImageGlide(Item item) {
@@ -123,7 +138,6 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             setImageWithoutApiResponse();
-                            Toast.makeText(itemView.getContext(), "failed", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                             return false;
                         }

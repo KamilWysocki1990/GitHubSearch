@@ -44,30 +44,11 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter, Li
     }
 
     private void getDataFromModel(String request) {
-        getResponse(request);
+        getFirstResponse(request);
 
     }
 
     private void getPagedResponse(String request) {
-        if (numberOfItems <= 200) {
-
-            String requestForPagedItems = "repositories?q=" + request + "&per_page=50";
-            compositeDisposable.add(
-                    api.getRepo(requestForPagedItems)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    repoData -> {
-                                        viewGHS.addPagedItemToList(repoData.getItems());
-                                    },
-                                    Throwable::printStackTrace
-                                    , () -> {
-                                    }
-                            )
-            );
-
-
-        } else {
 
             double numberOfPageRound = setNumberForPageIteration();
             for (int i = 1; i <= numberOfPageRound; i++) {
@@ -83,6 +64,7 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter, Li
                                 .subscribe(
                                         repoData -> {
                                             viewGHS.addPagedItemToList(repoData.getItems());
+
                                         },
                                         Throwable::printStackTrace
                                         , () -> {
@@ -95,7 +77,9 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter, Li
 
             }
         }
-    }
+
+
+
 
     private double setNumberForPageIteration() {
         double numberOfPage = (numberOfItems/ 100);
@@ -103,13 +87,15 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter, Li
         if(numberOfPage>numberOfPageRound){
             numberOfPageRound=numberOfPageRound+1;
         }
-        return numberOfPageRound;
+        //numberOfPageRound -1  because first request was already done with check for items
+        return numberOfPageRound -1;
     }
 
 
-    private void getResponse(String request) {
-
-        String requestForNumberOfItems = "repositories?q=" + request + "&per_page=1";
+    private void getFirstResponse(String request) {
+        compositeDisposable.clear();
+        viewGHS.showProgress();
+        String requestForNumberOfItems = "repositories?q=" + request + "&per_page=100";
         compositeDisposable.add(
                 api.getRepo(requestForNumberOfItems)
                         .subscribeOn(Schedulers.io())
@@ -117,7 +103,10 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter, Li
                         .subscribe(
                                 repoData -> {
                                     numberOfItems = repoData.getTotalCount();
-                                }, Throwable::printStackTrace
+                                    viewGHS.displayHowManyItemsFromResponseTotal(String.valueOf(repoData.getTotalCount()));
+                                    viewGHS.addPagedItemToList(repoData.getItems());
+                                }, throwable -> viewGHS.showError()
+
                                 , () -> {
                                     getPagedResponse(request);
                                 }

@@ -4,4 +4,15 @@
     <string name="button_search_text">Search</string>
     <string name="owneravatar">OwnerAvatar</string>
     <string name="star">star</string>
+    <string name="textForMissingWebServices">Unfortunately, there is no application that can handle this operation</string>
+    <string name="buttonquitapplication">ButtonQuitApplication</string>
+    <string name="textForLackLanguage">Information not provided</string>
+    <string name="textForLackName">Name not provided</string>
+    <string name="repository_name">Repository Name:</string>
+    <string name="programming_language">Programming Language :</string>
+    <string name="git_hub_search_error_message">Error occurred - please try again</string>
+    <string name="try_again">Try again</string>
+    <string name="empty_edit_text_search">First type repo name to search</string>
+
+
 </resources>
