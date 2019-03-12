@@ -1,5 +1,6 @@
 package githubfort.k.githubsearchapp.activitys.githubsearch;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
@@ -9,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -77,16 +81,20 @@ public class GitHubSearchActivity extends AppCompatActivity implements GitHubSea
         gitRepoRecycler.addItemDecoration(itemDecoration);
         gitRepoRecycler.setHasFixedSize(true);
         gitRepoRecycler.setAdapter(adapter);
-
         createShowCase();
 
-    }
 
+        
+    }
 
     @OnClick(R.id.button_search)
     public void onSearchClick(){
         listOfItemsToAdapter.clear();
+        searchRepoEditText.setSelected(false);
         searchRepoEditText.clearFocus();
+        clearKeyboardAfterSearchButton();
+
+
         adapter.clearRepoBeforeNextRequest();
         presenterGHS.searchForRepo(searchRepoEditText.getText().toString());
 
@@ -144,14 +152,18 @@ public class GitHubSearchActivity extends AppCompatActivity implements GitHubSea
         sequence.setConfig(config);
 
         sequence.addSequenceItem(searchRepoEditText,
-                "Here u can type name of Repo u are looking for ", "GOT IT");
+                getString(R.string.showcase_edit_text), getString(R.string.showcase_dismiss_text));
 
         sequence.addSequenceItem(buttonForSearch,
-                "This is button for Search", "GOT IT");
-        sequence.addSequenceItem(buttonTryAgain,"Here u will see the result of the search","GOT IT" );
+                "This is button for Search", getString(R.string.showcase_dismiss_text));
+        sequence.addSequenceItem(buttonTryAgain,getString(R.string.showcase_text_about_result),getString(R.string.showcase_dismiss_text ));
         sequence.start();
     }
 
-
+    private void clearKeyboardAfterSearchButton() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        Objects.requireNonNull(imm).hideSoftInputFromWindow(searchRepoEditText.getWindowToken(), 0);
+    }
 
 }

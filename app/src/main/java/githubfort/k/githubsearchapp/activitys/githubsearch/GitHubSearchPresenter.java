@@ -7,6 +7,7 @@ import android.arch.lifecycle.OnLifecycleEvent;
 
 
 import githubfort.k.githubsearchapp.network.Api;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -15,7 +16,7 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter, Li
 
     private GitHubSearchContract.View viewGHS;
     private Api api;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
     private double numberOfItems;
 
     public GitHubSearchPresenter(GitHubSearchContract.View viewGHS, Api api) {
@@ -23,7 +24,7 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter, Li
         this.api = api;
 
         ((LifecycleOwner) viewGHS).getLifecycle().addObserver(this);
-
+        compositeDisposable = new CompositeDisposable();
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
@@ -47,6 +48,7 @@ public class GitHubSearchPresenter implements GitHubSearchContract.Presenter, Li
         getFirstResponse(request);
 
     }
+
 
     private void getPagedResponse(String request) {
 

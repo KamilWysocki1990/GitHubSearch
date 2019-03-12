@@ -13,6 +13,19 @@
     <string name="git_hub_search_error_message">Error occurred - please try again</string>
     <string name="try_again">Try again</string>
     <string name="empty_edit_text_search">First type repo name to search</string>
+    <string name="git_hub_search_error_message_cases">Most probably cases of Error:
+        \n - Low or absent internet connection - check it !
+        \n - Reached limit of request:
+        \n Application can provide 6000 repository or 60 request per hour
+        \n Try to make your inquiry as accurate as possible !
+                                                        </string>
+    <string name="showcase_edit_text">Here u can type name of Repo u are looking for.\n
+        \nREMEMBER !
+        \nTry to make your inquiry as accurate as possible !
+        \nApplication can provide 6000 repository or 60 request per hour
 
+    </string>
+    <string name="showcase_dismiss_text">GOT IT</string>
+    <string name="showcase_text_about_result">Here u will see the result of the search</string>
 
 </resources>
