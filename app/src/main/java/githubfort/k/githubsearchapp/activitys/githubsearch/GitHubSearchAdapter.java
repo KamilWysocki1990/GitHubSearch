@@ -26,7 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import githubfort.k.githubsearchapp.R;
-import githubfort.k.githubsearchapp.data.Item;
+import githubfort.k.githubsearchapp.model.Item;
 
 
 public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapter.ViewHolder> {

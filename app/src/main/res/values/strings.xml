@@ -27,5 +27,6 @@
     </string>
     <string name="showcase_dismiss_text">GOT IT</string>
     <string name="showcase_text_about_result">Here u will see the result of the search</string>
+    <string name="button_for_search_text">This is button for Search</string>
 
 </resources>

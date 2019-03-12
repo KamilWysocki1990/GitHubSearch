@@ -1,4 +1,4 @@
-package githubfort.k.githubsearchapp.data;
+package githubfort.k.githubsearchapp.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

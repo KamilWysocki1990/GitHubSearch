@@ -2,7 +2,7 @@ package githubfort.k.githubsearchapp.activitys.githubsearch;
 
 import java.util.List;
 
-import githubfort.k.githubsearchapp.data.Item;
+import githubfort.k.githubsearchapp.model.Item;
 
 public interface GitHubSearchContract {
 

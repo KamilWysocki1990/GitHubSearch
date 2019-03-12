@@ -1,6 +1,6 @@
 package githubfort.k.githubsearchapp.network;
 
-import githubfort.k.githubsearchapp.data.Repo;
+import githubfort.k.githubsearchapp.model.Repo;
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Url;

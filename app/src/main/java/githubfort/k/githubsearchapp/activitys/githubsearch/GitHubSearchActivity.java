@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +28,7 @@ import butterknife.OnClick;
 import githubfort.k.githubsearchapp.GitHubSearchApplication;
 import githubfort.k.githubsearchapp.R;
 import githubfort.k.githubsearchapp.activitys.githubsearch.di.GitHubSearchModule;
-import githubfort.k.githubsearchapp.data.Item;
+import githubfort.k.githubsearchapp.model.Item;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
@@ -84,7 +83,7 @@ public class GitHubSearchActivity extends AppCompatActivity implements GitHubSea
         createShowCase();
 
 
-        
+
     }
 
     @OnClick(R.id.button_search)
@@ -155,7 +154,7 @@ public class GitHubSearchActivity extends AppCompatActivity implements GitHubSea
                 getString(R.string.showcase_edit_text), getString(R.string.showcase_dismiss_text));
 
         sequence.addSequenceItem(buttonForSearch,
-                "This is button for Search", getString(R.string.showcase_dismiss_text));
+                getString(R.string.button_for_search_text), getString(R.string.showcase_dismiss_text));
         sequence.addSequenceItem(buttonTryAgain,getString(R.string.showcase_text_about_result),getString(R.string.showcase_dismiss_text ));
         sequence.start();
     }
